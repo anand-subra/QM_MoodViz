@@ -1,0 +1,20 @@
+body
+{
+  background-color: rgb(41,47,54);
+  font-family: 'Cabin', sans-serif;
+  color: rgb(78,205,196);
+}
+
+h1
+{
+    color: rgb(255,107,107);
+    padding-left: 15px;
+    font-size: 300%;
+
+}
+
+
+.container
+{
+  width: 100%;
+}
