@@ -1,177 +1,111 @@
-var boids = [];
+var centerX = $(window).width()/2,
+    centerY = $(window).height()/2,
+    radius = 200,
+    angle = 0,
+    speed = 0.01,
+    x, y;
+
+var mySound, amplitude;
+var songNow;
+var songDur;
+
+
+function preload(){
+  mySound = loadSound('assets/HelloAdele.mp3');
+}
+
 
 function setup() {
   createCanvas($(window).width(), $(window).height()-300);
-
-  // Add an initial set of boids into the system
-  for (var i = 0; i < 100; i++) {
-    boids[i] = new Boid(random(width), random(height));
-  }
+  amplitude = new p5.Amplitude();
+  frameRate(60);
+  textAlign(CENTER);
+  mySound.setVolume(0.5);
+  fft = new p5.FFT();
+  fft.smooth(1.0);
 }
+
+
 
 function draw() {
-  background(41,47,54);
-  // Run all the boids
-  for (var i = 0; i < boids.length; i++) {
-    boids[i].run(boids);
+  //animate ellipse into lissajous curve + set size to amplitude
+  background(0);
+  x = centerX + cos(angle)*radius;
+  y = centerY + sin(angle)*radius;
+  var level = amplitude.getLevel();
+  var size = map(level, 0, 1, 0, 700);
+  var sizeFill = size * 255;
+  fill(sizeFill, 75, 75);
+  noStroke();
+  ellipse(x, y, size, size);
+  angle += speed;
+
+  //draw waveform
+  var waveform = fft.waveform();
+  noFill();
+  beginShape();
+  stroke(78,205,196); // waveform is red
+  strokeWeight(2);
+  for (var i = 0; i< waveform.length; i++){
+    var xW = map(i, 0, waveform.length, 0, width);
+    var yW = map( waveform[i], -1, 1, 0, height);
+    vertex(xW,yW);
   }
+  endShape();
+
+  //round currentTime + duration
+  fill(255,107,107);
+  noStroke();
+  textSize(14);
+  songNow = mySound.currentTime();
+  songDur = mySound.duration();
+  textFont("Helvetica");
+  text(nfc(songNow,2), width-150, 35);
+  text(nfc(songDur,2), $(window).width()-25, 35);
+
+  stroke(255);
+  line(width-125, 30, width-55, 30);
+  var playhead = map(songNow, 0, songDur, width-125, width-55);
+  noStroke();
+  ellipse(playhead, 30, 10, 10);
+
+
 }
 
 
-// Boid class
-// Methods for Separation, Cohesion, Alignment added
-function Boid(x, y) {
-  this.acceleration = createVector(0, 0);
-  this.velocity = p5.Vector.random2D();
-  this.position = createVector(x, y);
-  this.r = 3.0;
-  this.maxspeed = 3;    // Maximum speed
-  this.maxforce = 0.05; // Maximum steering force
-}
 
-Boid.prototype.run = function(boids) {
-  this.flock(boids);
-  this.update();
-  this.borders();
-  this.render();
-}
 
-// Forces go into acceleration
-Boid.prototype.applyForce = function(force) {
-  this.acceleration.add(force);
-}
 
-// We accumulate a new acceleration each time based on three rules
-Boid.prototype.flock = function(boids) {
-  var sep = this.separate(boids); // Separation
-  var ali = this.align(boids);    // Alignment
-  var coh = this.cohesion(boids); // Cohesion
-  // Arbitrarily weight these forces
-  sep.mult(2.5);
-  ali.mult(1.0);
-  coh.mult(1.0);
-  // Add the force vectors to acceleration
-  this.applyForce(sep);
-  this.applyForce(ali);
-  this.applyForce(coh);
-}
+function keyPressed() {
+//pause-play functionality
+  if (keyCode == RETURN && mySound.isPlaying())
+  {
+    mySound.pause();
+  }
+  else if ((keyCode == RETURN && !mySound.isPaused()) || (keyCode == ENTER && !mySound.isPlaying()) )
+  {
+    mySound.play();
+  }
 
-// Method to update location
-Boid.prototype.update = function() {
-  // Update velocity
-  this.velocity.add(this.acceleration);
-  // Limit speed
-  this.velocity.limit(this.maxspeed);
-  this.position.add(this.velocity);
-  // Reset accelertion to 0 each cycle
-  this.acceleration.mult(0);
-}
-
-// A method that calculates and applies a steering force towards a target
-// STEER = DESIRED MINUS VELOCITY
-Boid.prototype.seek = function(target) {
-  var desired = p5.Vector.sub(target, this.position); // A vector pointing from the location to the target
-  // Normalize desired and scale to maximum speed
-  desired.normalize();
-  desired.mult(this.maxspeed);
-  // Steering = Desired minus Velocity
-  var steer = p5.Vector.sub(desired, this.velocity);
-  steer.limit(this.maxforce); // Limit to maximum steering force
-  return steer;
-}
-
-// Draw boid as a circle
-Boid.prototype.render = function() {
-  fill(255);
-  stroke(200);
-  ellipse(this.position.x, this.position.y, 16, 16);
-}
-
-// Wraparound
-Boid.prototype.borders = function() {
-  if (this.position.x < -this.r) this.position.x = width + this.r;
-  if (this.position.y < -this.r) this.position.y = height + this.r;
-  if (this.position.x > width + this.r) this.position.x = -this.r;
-  if (this.position.y > height + this.r) this.position.y = -this.r;
-}
-
-// Separation
-// Method checks for nearby boids and steers away
-Boid.prototype.separate = function(boids) {
-  var desiredseparation = 25.0;
-  var steer = createVector(0, 0);
-  var count = 0;
-  // For every boid in the system, check if it's too close
-  for (var i = 0; i < boids.length; i++) {
-    var d = p5.Vector.dist(this.position, boids[i].position);
-    // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
-    if ((d > 0) && (d < desiredseparation)) {
-      // Calculate vector pointing away from neighbor
-      var diff = p5.Vector.sub(this.position, boids[i].position);
-      diff.normalize();
-      diff.div(d); // Weight by distance
-      steer.add(diff);
-      count++; // Keep track of how many
+//stop functionality
+  if (keyCode == ESCAPE)
+  {
+    if(mySound.isPlaying() )
+    {
+      mySound.stop();
     }
   }
-  // Average -- divide by how many
-  if (count > 0) {
-    steer.div(count);
+
+//seek functionality +/- 15secs
+  if (keyCode == RIGHT_ARROW)
+  {
+    mySound.jump(songNow+5);
+  }
+  if (keyCode == LEFT_ARROW)
+  {
+    mySound.jump(songNow-5);
   }
 
-  // As long as the vector is greater than 0
-  if (steer.mag() > 0) {
-    // Implement Reynolds: Steering = Desired - Velocity
-    steer.normalize();
-    steer.mult(this.maxspeed);
-    steer.sub(this.velocity);
-    steer.limit(this.maxforce);
-  }
-  return steer;
-}
+  return false;
 
-// Alignment
-// For every nearby boid in the system, calculate the average velocity
-Boid.prototype.align = function(boids) {
-  var neighbordist = 50;
-  var sum = createVector(0, 0);
-  var count = 0;
-  for (var i = 0; i < boids.length; i++) {
-    var d = p5.Vector.dist(this.position, boids[i].position);
-    if ((d > 0) && (d < neighbordist)) {
-      sum.add(boids[i].velocity);
-      count++;
-    }
-  }
-  if (count > 0) {
-    sum.div(count);
-    sum.normalize();
-    sum.mult(this.maxspeed);
-    var steer = p5.Vector.sub(sum, this.velocity);
-    steer.limit(this.maxforce);
-    return steer;
-  } else {
-    return createVector(0, 0);
-  }
-}
-
-// Cohesion
-// For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
-Boid.prototype.cohesion = function(boids) {
-  var neighbordist = 50;
-  var sum = createVector(0, 0); // Start with empty vector to accumulate all locations
-  var count = 0;
-  for (var i = 0; i < boids.length; i++) {
-    var d = p5.Vector.dist(this.position, boids[i].position);
-    if ((d > 0) && (d < neighbordist)) {
-      sum.add(boids[i].position); // Add location
-      count++;
-    }
-  }
-  if (count > 0) {
-    sum.div(count);
-    return this.seek(sum); // Steer towards the location
-  } else {
-    return createVector(0, 0);
-  }
 }
