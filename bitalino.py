@@ -2,7 +2,9 @@
 """
 .. module:: bitalino
    :synopsis: BITalino API
+
 *Created on Fri Jun 20 2014*
+
 *Last Modified on Thur Jun 25 2015*
 """
 
@@ -21,7 +23,7 @@ def find():
 
     Searches for bluetooth devices nearby.
     """
-    if platform.system() == 'Windows' or platform.system() == 'Linux':
+    if platform.system() == 'Windows' or platform.system() == 'Linux' or platform.system() == 'Darwin':
         try:
             import bluetooth
         except Exception, e:
@@ -76,7 +78,7 @@ class BITalino(object):
             except Exception:
                 raise Exception(ExceptionCode.INVALID_PARAMETER)
         if (checkMatch):
-            if platform.system() == 'Windows' or platform.system() == 'Linux':
+            if platform.system() == 'Darwin' or platform.system() == 'Windows':
                 try:
                     import bluetooth
                 except Exception, e:
