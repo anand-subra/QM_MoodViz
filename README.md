@@ -1,12 +1,13 @@
 # Mood Visualiser
 
-The aim of this UG project is to design a system which makes use of wireless devices, web technologies and biometric sensors to present data in the form of a visualisation that is easily accessible and interpretable by both performer and audience in real time. 
+The aim of this UG project is to design a system which makes use of wireless devices, web technologies and biometric sensors to present data in the form of a visualisation that is easily accessible and interpretable by both performer and audience in real time.
 
 Technologies used in this project:
+- Node.js
 - [p5.js](http://p5js.org/) (a JavaScript library based on the Processing language)
 - [BITalino Plugged](http://www.bitalino.com/index.php/plugged-kit) health platform
-- Python
-- HTML/CSS
+- BITalino API (Python)
+- Bower
 
 
 New users (Mac):
