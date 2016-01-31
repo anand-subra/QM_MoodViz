@@ -3,27 +3,16 @@
 The aim of this UG project is to design a system which makes use of wireless devices, web technologies and biometric sensors to present data in the form of a visualisation that is easily accessible and interpretable by both performer and audience in real time.
 
 Technologies used in this project:
-- Node.js
+- [Node.js](https://nodejs.org/en/)
 - [p5.js](http://p5js.org/) (a JavaScript library based on the Processing language)
 - [BITalino Plugged](http://www.bitalino.com/index.php/plugged-kit) health platform
-- BITalino API (Python)
-- Bower
+- [BITalino Python API] (https://github.com/BITalinoWorld/python-api)
+- [socketIO JS](http://socket.io)
+- [socketIO-client(Python)](https://github.com/invisibleroads/socketIO-client)
 
-
-New users (Mac):
-- Install Node.js
-- **cd** into folder
-- Install NPM
-- Run Terminal
-- Update NPM packages using: *npm update*
-- Install live-server using: *sudo npm install -g live-server*
-
-Returning user (Mac):
-- **cd** into folder
-- Update NPM packages if need be using: *npm update*
-- Run live server: *live-server*
-- Command should launch the web-app in a new browser page
-
+- Run "live-server" in Terminal window
+- Run "nodemon server.js" in another Terminal window
+- Run "python sock.py" in another Terminal window
 
 
 Created by **Anand Subramaniam**

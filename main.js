@@ -1,9 +1,14 @@
+//Variables for p5.Main and lissajous processes
 var centerX = $(window).width()/2,
     centerY = $(window).height()/2,
     radius = 100,
     angle = 0,
     speed = 0.01,
     x, y;
+
+
+
+//Variables for p5.Sound processes
 
 var mySound, amplitude;
 var songNow;
