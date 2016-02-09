@@ -10,9 +10,9 @@ Technologies used in this project:
 - [socketIO JS](http://socket.io)
 - [socketIO-client(Python)](https://github.com/invisibleroads/socketIO-client)
 
-- Run "live-server" in Terminal window
-- Run "nodemon server.js" in another Terminal window
-- Run "python sock.py" in another Terminal window
+- Run "live-server" in Terminal process
+- Run "nodemon server.js" in another Terminal process
+- Run "python sock.py" in another Terminal process
 
 
 Created by **Anand Subramaniam**

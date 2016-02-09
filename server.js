@@ -3,7 +3,6 @@ var http = require('http'), io = require('socket.io');
 
 // Start the server at port 8080
 var server = http.createServer(function(req, res){
-
   // Send HTML headers and message
   res.writeHead(200,{ 'Content-Type': 'text/html' });
   res.end('<h1>Hello Socket Lover!</h1>');
@@ -22,6 +21,12 @@ socket.on('connection', function(client){
     console.log('Received message from client!',event);
   });
 
+  client.on('boardstate', function(data){
+    client.broadcast.emit('boardstate', data);
+    client.emit('message', 'hello');
+    console.log(data);
+  });
+
 
 //BROADCAST BUT NOT JUST EMIT??
   client.on('board', function(data){
@@ -32,8 +37,9 @@ socket.on('connection', function(client){
 
   client.on('disconnect',function(){
     console.log('Server has disconnected');
+    client.broadcast.emit('boardstate', "Board disconnected");
   });
 
 });
 
-server.listen(3000);
+server.listen(12345);
