@@ -1,20 +1,58 @@
-body
-{
-  background-color: rgb(41,47,54);
-  font-family: 'Cabin', sans-serif;
-  color: rgb(78,205,196);
-}
-
-h1
-{
-    color: rgb(255,107,107);
-    padding-left: 15px;
-    font-size: 300%;
-
-}
-
-
-.container
+.container-fluid
 {
   width: 100%;
+}
+
+body
+{
+  background-color: black;
+  font-family: 'Inconsolata', sans-serif;
+}
+
+h2{
+  font-weight: bold;
+}
+
+h3{
+  //color: rgb(78,205,196);
+  color: white;
+  font-size: 90%;
+  opacity: 0.8;
+}
+
+.details{
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+}
+
+.moodviz{
+    color: white;
+    left: 15px;
+    font-size: 300%;
+    position: absolute;
+    top: 0px;
+}
+
+.state{
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+#bitmsg{
+  color: white;
+}
+
+.glyphicon{
+  vertical-align: middle;
+  font-size: 150%;
+}
+
+.glyphicon-exclamation-sign{
+  color: #fee443;
+}
+
+.glyphicon-transfer{
+  color: #64f846;
 }

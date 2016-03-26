@@ -1,0 +1,27 @@
+{
+  "name": "QM_MoodVIz",
+  "version": "1.0.0",
+  "description": "The aim of this UG project is to design a system which makes use of wireless devices, web technologies and biometric sensors to present data in the form of a visualisation that is easily accessible and interpretable by both performer and audience in real time.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anand-subra/QM_MoodViz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anand-subra/QM_MoodViz/issues"
+  },
+  "homepage": "https://github.com/anand-subra/QM_MoodViz#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.0",
+    "p5": "^0.4.21",
+    "socket.io": "^1.4.5"
+  }
+}

@@ -1,10 +1,10 @@
 //Variables for p5.Main and lissajous processes
 var centerX = $(window).width()/2,
     centerY = $(window).height()/2,
-    radius = 100,
+    radius = 300,
     angle = 0,
-    speed = 0.01,
-    x, y;
+    speed = 0.02,
+    x, y, size;
 
 
 
@@ -16,14 +16,13 @@ var songDur;
 
 
 function preload(){
-  mySound = loadSound('assets/HelloAdele.mp3');
+  mySound = loadSound('assets/audio/HelloAdele.mp3');
 }
 
 
 function setup() {
-  createCanvas($(window).width(), $(window).height()-300);
+  createCanvas($(window).width(), $(window).height());
   amplitude = new p5.Amplitude();
-  frameRate(60);
   textAlign(CENTER);
   mySound.setVolume(0.5);
   fft = new p5.FFT();
@@ -31,17 +30,25 @@ function setup() {
 }
 
 
-
 function draw() {
   //animate ellipse into lissajous curve + set size to amplitude
   background(0);
-  x = centerX + cos(angle)*radius;
-  y = centerY + sin(angle)*radius;
   var level = amplitude.getLevel();
-  var size = map(level, 0, 1, 0, 700);
+  size = map(level, 0, 1, 0, 1000);
+
+
+  var spectrum = fft.analyze();
+
+
+
+
+  document.getElementById("audio-data").innerHTML = "Level: " + level + " Spectrum: " + spectrum;
+
   var sizeFill = size * 255;
   fill(sizeFill, 75, 75);
   noStroke();
+  x = centerX + cos(angle)*radius;
+  y = centerY + sin(angle)*radius;
   ellipse(x, y, size, size);
   angle += speed;
 
@@ -49,7 +56,7 @@ function draw() {
   var waveform = fft.waveform();
   noFill();
   beginShape();
-  stroke(78,205,196); // waveform is red
+  stroke(41,47,54); // waveform is grey-blue
   strokeWeight(2);
   for (var i = 0; i< waveform.length; i++){
     var xW = map(i, 0, waveform.length, 0, width);
@@ -57,28 +64,7 @@ function draw() {
     vertex(xW,yW);
   }
   endShape();
-
-  //round currentTime + duration
-  fill(255,107,107);
-  noStroke();
-  textSize(14);
-  songNow = mySound.currentTime();
-  songDur = mySound.duration();
-  textFont("Helvetica");
-  text(nfc(songNow,2), width-150, 35);
-  text(nfc(songDur,2), $(window).width()-25, 35);
-
-  stroke(255);
-  line(width-125, 30, width-55, 30);
-  var playhead = map(songNow, 0, songDur, width-125, width-55);
-  noStroke();
-  ellipse(playhead, 30, 10, 10);
-
-
 }
-
-
-
 
 
 function keyPressed() {

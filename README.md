@@ -10,9 +10,10 @@ Technologies used in this project:
 - [socketIO JS](http://socket.io)
 - [socketIO-client(Python)](https://github.com/invisibleroads/socketIO-client)
 
-- Run "live-server" in Terminal process
-- Run "nodemon server.js" in another Terminal process
-- Run "python sock.py" in another Terminal process
+How to run:
+- Run ***live-server*** in Terminal process
+- Run ***nodemon server.js*** or ***node server.js*** in another Terminal process
+- Run ***python MoodVizBit.py*** in another Terminal process
 
 
 Created by **Anand Subramaniam**

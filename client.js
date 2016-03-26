@@ -10,8 +10,7 @@ socket.on('connect',function() {
 socket.on('message',function(data) {
 	//On 'message' channel, message from BITalino board
 	console.log('Received a message from the server!',data);
-	var bitmsgdiv = document.getElementById('bitmsg')
-	bitmsgdiv.innerHTML = data;
+	$("#bitmsg").html(data);
 });
 // Add a disconnect listener
 socket.on('disconnect',function() {
@@ -19,13 +18,13 @@ socket.on('disconnect',function() {
 });
 
 socket.on('boardstate', function(data){
-	var bitstate = 	document.getElementById('bitstate');
 	if (data == "yes"){
-	bitstate.innerHTML = "Connected";
+		$("#bitstate").removeClass('glyphicon-exclamation-sign');
+		$("#bitstate").addClass('glyphicon-transfer');
 	}
-
 	else{
-		bitstate.innerHTML = "Disconnected";
+		$("#bitstate").removeClass('glyphicon-transfer');
+		$("#bitstate").addClass('glyphicon-exclamation-sign');
 	}
 });
 
