@@ -1,37 +1,36 @@
+//Import visualisation controller script
+$.getScript("vizController.js");
+
 //Variables for p5.Main and lissajous processes
 var centerX = $(window).width()/2,
 centerY = $(window).height()/2,
 radius,
 angle = 0,
-speed = 0.1,
+speed,
 x, y, sizePath,
 windowHeight = $(window).height(),
-windowWidth = $(window).width(), c;
+windowWidth = $(window).width(), c, vertices;
 
 //Variables for p5.Sound processes
 var mySound, amplitude, beat, ellipseWidth;
 
 function preload(){
-  mySound = loadSound('assets/audio/BallinLogic.mp3');
+  mySound = loadSound('assets/audio/FatherStretchMyHandsKanyeWest.mp3');
 }
 
-var type = $('#colourScheme').val();
-
-$("#colourScheme").change(function(){
-  type = this.value;
-  c = colourS(type);
-})
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  frameRate(60);
   amplitude = new p5.Amplitude();
   textAlign(CENTER);
+  frameRate(fr);
   mySound.setVolume(0.8);
   fft = new p5.FFT();
   beat = new p5.PeakDetect();
   smooth();
   c = colourS(type);
+  vertices = 40;
+  speed = 0.1;
 }
 
 
@@ -73,7 +72,7 @@ function draw() {
   var treble = floor(fft.getEnergy("treble"));
 
   var avrgFreqEngery = (bass + lowmid + mid + highmid + treble)/5;
-  var spikes = map(avrgFreqEngery, 0, 255, 0, 20);
+  var spikes = map(avrgFreqEngery, 0, 255, 0, vertices);
 
   noFill();
   stroke(c);
@@ -85,7 +84,7 @@ function draw() {
   star(0, 0, 30, newRadius-5, spikes);
   pop();
 
-  document.getElementById("audio-data").innerHTML = "FPS:" + floor(frameRate());
+  //document.getElementById("audio-data").innerHTML = "FPS:" + floor(frameRate());
 }//end of draw
 
 
@@ -103,6 +102,18 @@ function colourS(set){
 }
 
 
+function setFrameRate(fps){
+  frameRate(fps);
+}
+
+function setGeomComplexity(vert){
+  vertices = vert;
+}
+
+function setCycleSpeed(cspeed){
+  speed = cspeed;
+}
+
 
 function star(x, y, radius1, radius2, npoints) {
   var angle = TWO_PI / npoints;
@@ -118,16 +129,6 @@ function star(x, y, radius1, radius2, npoints) {
   }
   endShape(CLOSE);
 }
-
-
-
-
-
-
-
-
-
-
 
 function keyPressed() {
   //pause-play functionality
