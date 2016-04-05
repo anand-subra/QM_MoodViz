@@ -3,7 +3,9 @@ var centerX = $(window).width()/2,
 centerY = $(window).height()/2,
 radius,
 angle = 0,
-speed = 0.5,
+speed = 0.1
+
+,
 x, y, sizePath,
 windowHeight = $(window).height(),
 windowWidth = $(window).width(), c;
@@ -15,7 +17,7 @@ var mySound, amplitude, beat, ellipseWidth;
 
 
 function preload(){
-  mySound = loadSound('assets/audio/FatherStretchMyHandsKanyeWest.mp3');
+  mySound = loadSound('assets/audio/KingKuntaKendrickLamar.m4a');
 }
 
 
@@ -28,7 +30,7 @@ function setup() {
   fft = new p5.FFT();
   beat = new p5.PeakDetect();
   smooth();
-  c = color(random(75,255), random(75,255), random(75,255), 200);
+  c = color(random(90,255), random(90,255), random(90,255), 200);
 }
 
 
@@ -54,16 +56,98 @@ function draw() {
   angle += speed;
 
 
-  fft.analyze();
+  var spectrum = fft.analyze();
   beat.update(fft);
 
   //if beat is detected, randomly change the color of the ellipses
   if (beat.isDetected) {
     c = color(random(75,255), random(75,255), random(75,255), 200);
   }
-  //document.getElementById("audio-data").innerHTML = "Level: " + sizePath;
+
+  var bass = floor(fft.getEnergy("bass"));
+  var lowmid = floor(fft.getEnergy("lowMid"));
+  var mid = floor(fft.getEnergy("mid"));
+  var highmid = floor(fft.getEnergy("highMid"));
+  var treble = floor(fft.getEnergy("treble"));
+
+
+
+
+var avrgFreqEngery = (bass + lowmid + mid + highmid + treble)/5;
+var spikes = map(avrgFreqEngery, 0, 255, 0, 20);
+
+noFill();
+stroke(c);
+strokeWeight(1);
+
+
+
+push();
+  translate(width*0.5, height*0.5);
+  rotate(frameCount / 120.0);
+  star(0, 0, 30, newRadius-5, spikes);
+  pop();
+
+
+
+
+
+
+  // var spikeTreble = map (treble, 0, 255, 0, 20);
+  // var spikeMid = map (mid, 0, 255, 0, 20);
+  // var spikeBass = map (bass, 0, 255, 0, 20);
+  //
+  // noFill();
+  // stroke(c);
+  // strokeWeight(1);
+  // star(windowWidth/2, windowHeight/2, 30, newRadius*5, spikeTreble);
+  //
+  // noFill();
+  // stroke(c);
+  // strokeWeight(1);
+  // star(windowWidth/2, windowHeight/2, 30, newRadius*3, spikeMid);
+  //
+  // noFill();
+  // stroke(c);
+  // strokeWeight(1);
+  // star(windowWidth/2, windowHeight/2, 30, newRadius*2, spikeBass);
+
+
+
+
+
+
+
+  //document.getElementById("audio-data").innerHTML = "Level: " + sizePath + " " +  bass;
+  //document.getElementById("audio-data").innerHTML = " " + bass + " " +  lowmid + " " +  mid + " " +  highmid + " " +  treble;
 
 }//end of draw
+
+
+
+
+function star(x, y, radius1, radius2, npoints) {
+  var angle = TWO_PI / npoints;
+  var halfAngle = angle/2.0;
+  beginShape();
+  for (var a = 0; a < TWO_PI; a += angle) {
+    var sx = x + cos(a) * radius2;
+    var sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a+halfAngle) * radius1;
+    sy = y + sin(a+halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -71,10 +155,12 @@ function keyPressed() {
   //pause-play functionality
   if (keyCode == RETURN && mySound.isPlaying())
   {
+    noLoop();
     mySound.pause();
   }
   else if ((keyCode == RETURN && !mySound.isPaused()) || (keyCode == ENTER && !mySound.isPlaying()) )
   {
+    loop();
     mySound.play();
   }
 
@@ -87,15 +173,15 @@ function keyPressed() {
     }
   }
 
-  //seek functionality +/- 15secs
-  if (keyCode == RIGHT_ARROW)
-  {
-    mySound.jump(songNow+5);
-  }
-  if (keyCode == LEFT_ARROW)
-  {
-    mySound.jump(songNow-5);
-  }
+  // //seek functionality +/- 15secs
+  // if (keyCode == RIGHT_ARROW)
+  // {
+  //   mySound.jump(songNow+5);
+  // }
+  // if (keyCode == LEFT_ARROW)
+  // {
+  //   mySound.jump(songNow-5);
+  // }
 
   return false;
 
