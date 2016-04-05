@@ -3,23 +3,24 @@ var centerX = $(window).width()/2,
 centerY = $(window).height()/2,
 radius,
 angle = 0,
-speed = 0.1
-
-,
+speed = 0.1,
 x, y, sizePath,
 windowHeight = $(window).height(),
 windowWidth = $(window).width(), c;
 
-
-
 //Variables for p5.Sound processes
 var mySound, amplitude, beat, ellipseWidth;
 
-
 function preload(){
-  mySound = loadSound('assets/audio/KingKuntaKendrickLamar.m4a');
+  mySound = loadSound('assets/audio/BallinLogic.mp3');
 }
 
+var type = $('#colourScheme').val();
+
+$("#colourScheme").change(function(){
+  type = this.value;
+  c = colourS(type);
+})
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -30,7 +31,7 @@ function setup() {
   fft = new p5.FFT();
   beat = new p5.PeakDetect();
   smooth();
-  c = color(random(90,255), random(90,255), random(90,255), 200);
+  c = colourS(type);
 }
 
 
@@ -39,6 +40,7 @@ function draw() {
   noStroke();
   fill(0, 0, 0, 10);
   rect(0, 0, windowWidth, windowHeight);
+
 
   //get amplitude and map to ellipse radius variable
   var level = amplitude.getLevel();
@@ -61,7 +63,7 @@ function draw() {
 
   //if beat is detected, randomly change the color of the ellipses
   if (beat.isDetected) {
-    c = color(random(75,255), random(75,255), random(75,255), 200);
+    c = colourS(type);
   }
 
   var bass = floor(fft.getEnergy("bass"));
@@ -70,59 +72,35 @@ function draw() {
   var highmid = floor(fft.getEnergy("highMid"));
   var treble = floor(fft.getEnergy("treble"));
 
+  var avrgFreqEngery = (bass + lowmid + mid + highmid + treble)/5;
+  var spikes = map(avrgFreqEngery, 0, 255, 0, 20);
 
+  noFill();
+  stroke(c);
+  strokeWeight(1);
 
-
-var avrgFreqEngery = (bass + lowmid + mid + highmid + treble)/5;
-var spikes = map(avrgFreqEngery, 0, 255, 0, 20);
-
-noFill();
-stroke(c);
-strokeWeight(1);
-
-
-
-push();
+  push();
   translate(width*0.5, height*0.5);
   rotate(frameCount / 120.0);
   star(0, 0, 30, newRadius-5, spikes);
   pop();
 
-
-
-
-
-
-  // var spikeTreble = map (treble, 0, 255, 0, 20);
-  // var spikeMid = map (mid, 0, 255, 0, 20);
-  // var spikeBass = map (bass, 0, 255, 0, 20);
-  //
-  // noFill();
-  // stroke(c);
-  // strokeWeight(1);
-  // star(windowWidth/2, windowHeight/2, 30, newRadius*5, spikeTreble);
-  //
-  // noFill();
-  // stroke(c);
-  // strokeWeight(1);
-  // star(windowWidth/2, windowHeight/2, 30, newRadius*3, spikeMid);
-  //
-  // noFill();
-  // stroke(c);
-  // strokeWeight(1);
-  // star(windowWidth/2, windowHeight/2, 30, newRadius*2, spikeBass);
-
-
-
-
-
-
-
-  //document.getElementById("audio-data").innerHTML = "Level: " + sizePath + " " +  bass;
-  //document.getElementById("audio-data").innerHTML = " " + bass + " " +  lowmid + " " +  mid + " " +  highmid + " " +  treble;
-
+  document.getElementById("audio-data").innerHTML = "FPS:" + floor(frameRate());
 }//end of draw
 
+
+function colourS(set){
+  var c;
+  switch(set){
+    case "IceBlue":
+    c = color(random(0,50), random(0,50), random(75,200), 200);
+    break;
+    case "Multi":
+    c = color(random(100,255), random(100,255), random(100,255), 200);
+    break;
+  }
+  return c;
+}
 
 
 
@@ -167,7 +145,7 @@ function keyPressed() {
   //stop functionality
   if (keyCode == ESCAPE)
   {
-    if(mySound.isPlaying() )
+    if(mySound.isPlaying())
     {
       mySound.stop();
     }
