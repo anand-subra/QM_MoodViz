@@ -1,9 +1,12 @@
 //Determine colour scheme to use
 var type = $('#colourScheme').val();
+$('#displayColourScheme').text(type);
 
 $("#colourScheme").change(function(){
   type = this.value;
   c = colourS(type);
+  $('#displayColourScheme').text(type);
+
 })
 
 
