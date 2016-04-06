@@ -1,5 +1,6 @@
-//Import visualisation controller script
+//Import visualisation controller and particle generator script
 $.getScript("vizController.js");
+$.getScript("confetti.js");
 
 //Variables for p5.Main and lissajous processes
 var centerX = $(window).width()/2,
@@ -9,7 +10,7 @@ angle = 0,
 speed,
 x, y, sizePath,
 windowHeight = $(window).height(),
-windowWidth = $(window).width(), c, vertices;
+windowWidth = $(window).width(), c, vertices, emitter, burst = 0, confettiSwitch;
 
 //Variables for p5.Sound processes
 var mySound, amplitude, beat, ellipseWidth;
@@ -18,19 +19,21 @@ function preload(){
   mySound = loadSound('assets/audio/FatherStretchMyHandsKanyeWest.mp3');
 }
 
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  colorMode(HSB, 360, 100, 100, 255);
   amplitude = new p5.Amplitude();
   textAlign(CENTER);
   frameRate(fr);
-  mySound.setVolume(0.8);
+  mySound.setVolume(1.0);
   fft = new p5.FFT();
   beat = new p5.PeakDetect();
   smooth();
   c = colourS(type);
   vertices = 40;
   speed = 0.1;
+
+  emitter = new ConfettiEmitter(createVector(windowWidth/2, windowHeight/2));
 }
 
 
@@ -39,7 +42,6 @@ function draw() {
   noStroke();
   fill(0, 0, 0, 10);
   rect(0, 0, windowWidth, windowHeight);
-
 
   //get amplitude and map to ellipse radius variable
   var level = amplitude.getLevel();
@@ -59,10 +61,14 @@ function draw() {
 
   var spectrum = fft.analyze();
   beat.update(fft);
-
+  emitter.run();
   //if beat is detected, randomly change the color of the ellipses
   if (beat.isDetected) {
     c = colourS(type);
+    if(confettiSwitch == "ON" && radius > 250){
+      burst = 1;
+      burstConfetti();
+    }
   }
 
   var bass = floor(fft.getEnergy("bass"));
@@ -81,21 +87,37 @@ function draw() {
   push();
   translate(width*0.5, height*0.5);
   rotate(frameCount / 120.0);
-  star(0, 0, 30, newRadius-5, spikes);
+  star(0, 0, (newRadius/4)+10, newRadius-5, spikes);
   pop();
 
-  //document.getElementById("audio-data").innerHTML = "FPS:" + floor(frameRate());
+  //document.getElementById("audio-data").innerHTML = "radius:" + radius;
 }//end of draw
+
+
+function burstConfetti(){
+  while(burst==1){
+    for(var i = 0; i<30; i++){
+      emitter.addConfetti();
+    }
+    burst = 0;
+  }
+}
 
 
 function colourS(set){
   var c;
   switch(set){
     case "IceBlue":
-    c = color(random(0,50), random(0,50), random(75,200), 200);
+    c = color(random(170,210), random(80,95), random(60,70));
     break;
     case "Multi":
-    c = color(random(100,255), random(100,255), random(100,255), 200);
+    c = color(random(1,360), random(70,95), random(80,100));
+    break;
+    case "Pinks":
+    c = color(random(300,350), random(70,95), random(75,100));
+    break;
+    case "HotFireMixTape":
+    c = color(random(1,60), random(90,100), random(80,100));
     break;
   }
   return c;
@@ -112,6 +134,10 @@ function setGeomComplexity(vert){
 
 function setCycleSpeed(cspeed){
   speed = cspeed;
+}
+
+function coffettiSwitch(cSwitch){
+  confettiSwitch = cSwitch;
 }
 
 

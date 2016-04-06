@@ -34,6 +34,15 @@ $("#cycleSpeed").change(function(){
 })
 
 
+//Determine cycle speed
+var confSwitch = $('#confetti').val();
+
+$("#confetti").change(function(){
+  confSwitch = this.value;
+  coffettiSwitch(confSwitch);
+})
+
+
 $(window).keypress(function(e) {
     if (e.which === 32) {
         alert("hello");
