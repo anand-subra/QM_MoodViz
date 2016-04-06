@@ -42,9 +42,20 @@ $("#confetti").change(function(){
   coffettiSwitch(confSwitch);
 })
 
+$(".controls").hide();
+var controlView = "yes";
 
-$(window).keypress(function(e) {
-    if (e.which === 32) {
-        alert("hello");
+$(function() {
+  $(document).keydown(function(evt) {
+    if (evt.keyCode == 32) {
+      if(controlView == "yes"){
+        $(".controls").hide();
+        controlView = "no";
+      }
+      else{
+        $(".controls").show();
+        controlView = "yes";
+      }
     }
+  });
 });
