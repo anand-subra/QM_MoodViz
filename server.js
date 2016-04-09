@@ -36,8 +36,8 @@ socket.on('connection', function(client){
   });
 
   client.on('disconnect',function(){
-    console.log('Server has disconnected');
-    client.broadcast.emit('boardstate', "Board disconnected");
+    console.log('Board has disconnected');
+    client.broadcast.emit('boardstate', "Board has disconnected");
   });
 
 });

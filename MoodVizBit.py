@@ -56,8 +56,8 @@ class MoodVizBit(object):
 
         self.batteryThreshold = 30
         self.acqChannels = [0,1]  # 0-7, left-top to right-bottom of Plugged board
-        self.samplingRate = 100
-        self.nSamples = 100
+        self.samplingRate = 1000
+        self.nSamples = 10
             # self.digitalOutput = [0,0,1,1]
 
             # Define column to read from incoming data matrix
@@ -98,51 +98,18 @@ class MoodVizBit(object):
             #print "No existing BITalino connected"
             sleep(1)
 
-    def send_sensor_data(self):
-        self.device.start(self.samplingRate, self.acqChannels)
-        while True:
-            msg = self.device.read(self.nSamples)
-            socketIO.emit('board', msg)
-
-    def sort_data(self):
+    def get_data(self):
         # Start acquiring data from board
         self.device.start(self.samplingRate, self.acqChannels)
         # Loop for constant data streaming
         while True:
             incomingData = self.device.read(self.nSamples)
             channel0 = incomingData[:, self.bitPort1]
-            arrEDA = numpy.array(channel0)
-            zEDA = stats.zscore(arrEDA)
-            print zEDA
-            zEDA = zEDA/3
-            #take the last value of the zscore
-            EDAvalue = zEDA[-1]
-            normEDAvalue = linlin(EDAvalue,-1.0,1.0,0.0,1.0)
-            socketIO.emit('board', zEDA)
-            # incomingData = self.device.read(self.nSamples)
-            # channel0 = incomingData[:, self.bitPort1]
-            # arrch0 = numpy.array(channel0)
-            # print arrch0
-            # arrch0 = (arrch0-512)/512
-            # EMGvalue = max(abs(arrch0))
-            # normEMGvalue = EMGvalue
-            # print normEMGvalue
-            # sleep(1)
-
-            # incomingData = self.device.read(self.nSamples)
-            # channel0 = incomingData[:, self.bitPort1]
-            # arrch0 = numpy.array(channel0)
-            # #print channel0
-            # print " "
-            # avrch0 = numpy.mean(arrch0)
-            # print avrch0
-            # print " "
-            # zch0 = stats.zscore(arrch0, axis=None)
-            # zch0 = numpy.array(zch0)
-            # #print zch0
-            # print " "
-            # socketIO.emit('board', numpy.mean(zch0))
-            # sleep(0.1)
+            channel0 = (channel0/1024)
+            arrch0 = numpy.array(channel0)
+            avrch0 = numpy.mean(arrch0)
+            print avrch0
+            socketIO.emit('board', avrch0)
 
 
 if __name__ == '__main__':
@@ -151,4 +118,4 @@ if __name__ == '__main__':
     bit.check_if_bitconnected()
     bit.connect_bit()
     #test_transm()
-    bit.sort_data()
+    bit.get_data()

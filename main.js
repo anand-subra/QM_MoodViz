@@ -10,18 +10,18 @@ angle = 0,
 speed,
 x, y, sizePath,
 windowHeight = $(window).height(),
-windowWidth = $(window).width(), c, vertices, emitter, burst = 0, confettiSwitch;
+windowWidth = $(window).width(), c, vertices, emitter, burst = 0, confettiSwitch, EDAvalue;
 
 //Variables for p5.Sound processes
 var mySound, amplitude, beat, ellipseWidth;
 
 function preload(){
-  mySound = loadSound('assets/audio/FatherStretchMyHandsKanyeWest.mp3');
+  mySound = loadSound('assets/audio/GetHyperDroideka.mp3');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  colorMode(HSB, 360, 100, 100, 255);
+  colorMode(HSB, 360, 100, 100, 100);
   amplitude = new p5.Amplitude();
   textAlign(CENTER);
   frameRate(fr);
@@ -32,7 +32,7 @@ function setup() {
   c = colourS(type);
   vertices = 40;
   speed = 0.1;
-
+  accountForEDA(EDAvalue);
   emitter = new ConfettiEmitter(createVector(windowWidth/2, windowHeight/2));
 }
 
@@ -40,8 +40,11 @@ function setup() {
 function draw() {
   //Add semi-transparent rectangle on every run of draw, creates fading effect
   noStroke();
-  fill(0, 0, 0, 10);
+  fill(0, 0, 0, 8);
   rect(0, 0, windowWidth, windowHeight);
+
+
+  accountForEDA(EDAvalue);
 
   //get amplitude and map to ellipse radius variable
   var level = amplitude.getLevel();
@@ -104,20 +107,29 @@ function burstConfetti(){
 }
 
 
+function accountForEDA(value){
+
+  if (value == 0 || value == null){
+      value = 1;
+    }
+
+}
+
+
 function colourS(set){
   var c;
   switch(set){
     case "IceBlue":
-    c = color(random(170,210), random(80,95), random(60,70));
+    c = color(random(170,210), random(80,95)*EDAvalue, random(60,70)*EDAvalue, 90);
     break;
     case "Multi":
-    c = color(random(1,360), random(70,95), random(80,100));
+    c = color(random(1,360), random(70,95)*EDAvalue, random(80,100)*EDAvalue, 90);
     break;
     case "Pinks":
-    c = color(random(300,350), random(70,95), random(75,100));
+    c = color(random(300,350), random(70,95)*EDAvalue, random(75,100)*EDAvalue, 90);
     break;
     case "HotFireMixTape":
-    c = color(random(1,60), random(90,100), random(80,100));
+    c = color(random(1,60), random(90,100)*EDAvalue, random(80,100)*EDAvalue, 90);
     break;
   }
   return c;

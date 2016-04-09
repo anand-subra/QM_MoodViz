@@ -4,13 +4,15 @@ var socket = io('localhost:12345');
 
 // Add a connect listener
 socket.on('connect',function() {
-	console.log('Client has connected to the server!');
+	console.log('Client has connected to the server (board)!');
 });
 // Add a connect listener
 socket.on('message',function(data) {
 	//On 'message' channel, message from BITalino board
-	console.log('Received a message from the server!',data);
-	$("#bitmsg").html(data);
+	console.log('Received a message from the board!',data);
+	//$("#bitmsg").html(data);
+	EDAvalue = data;
+	//$("#bitmsg").html(EDAvalue);
 });
 // Add a disconnect listener
 socket.on('disconnect',function() {
