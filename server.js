@@ -1,45 +1,44 @@
-// Require HTTP module (to start server) and Socket.IO
+// Socket programming implementation using SocketIO (server-side)
+// Require HTTP module (to start server) and Socket.IO to allow communication
 var http = require('http'), io = require('socket.io');
 
 // Start the server at port 8080
 var server = http.createServer(function(req, res){
-  // Send HTML headers and message
+  // Navigating to http://127.0.0.1:12345/ will provide the following response
   res.writeHead(200,{ 'Content-Type': 'text/html' });
-  res.end('<h1>Hello Socket Lover!</h1>');
+  res.end('<h1>Mood Visualizer</h1><p>This is the server side application.</p>');
 });
 
 
-// Create a Socket.IO instance, passing it our server
+// Create an instance of Socket.IO
 var socket = io.listen(server);
 
-// Add a connect listener
+// Indicate when web app (client) connects to the server using a listener
 socket.on('connection', function(client){
-  console.log('User has connected');
+  console.log('Web app has connected');
 
-  // Success!  Now listen to messages to be received
-  client.on('message',function(event){
+  client.on('message', function(event){
     console.log('Received message from client!',event);
   });
 
+  // Transmit board connection state to client
   client.on('boardstate', function(data){
     client.broadcast.emit('boardstate', data);
-    client.emit('message', 'hello');
-    console.log(data);
+    client.emit('message', data);
   });
 
-
-//BROADCAST BUT NOT JUST EMIT??
+  // Transmit sensor data to client
   client.on('board', function(data){
     client.broadcast.emit('message', data);
-    client.emit('message', 'hello');
-    console.log(data);
+    console.log("EDA value: " +data);
   });
 
-  client.on('disconnect',function(){
+  // Indicate when board disconnects using a listener
+  client.on('disconnect', function(){
     console.log('Board has disconnected');
     client.broadcast.emit('boardstate', "Board has disconnected");
   });
-
 });
 
+// Listen to a specific port number
 server.listen(12345);
