@@ -50,7 +50,7 @@ class MoodVizBit(object):
         self.batteryThreshold = 30
         self.acqChannels = [0,1]  # 0-7, left-top to right-bottom of Plugged board
         self.samplingRate = 1000
-        self.nSamples = 10
+        self.nSamples = 100
         # self.digitalOutput = [0,0,1,1]
 
         # Define column to read from incoming data matrix
