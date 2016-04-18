@@ -15,7 +15,7 @@ var socket = io.listen(server);
 
 // Indicate when web app (client) connects to the server using a listener
 socket.on('connection', function(client){
-  console.log('Web app has connected');
+  console.log('Client has connected');
 
   client.on('message', function(event){
     console.log('Received message from client!',event);

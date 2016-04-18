@@ -1,6 +1,6 @@
 // Socket programming implementation using SocketIO (client/browser-side)
 // Create SocketIO instance, connect to port specified in 'server.js'
-var socket = io('localhost:12345');
+var socket = io('localhost:12345'); //IP address or domain followed by port number
 
 // Indicate when board connects using a listener
 socket.on('connect',function() {
