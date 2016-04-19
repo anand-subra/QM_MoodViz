@@ -28,6 +28,8 @@ How to setup (single execution):
 - Exit out of directory
 - Run `pip install socketIO-client`
 - Run `pip install numpy`
+
+How to prepare project (single execution for every fresh project version download):
 - Download and extract project
 - Change directory to project root
 - Run `npm install`
