@@ -18,7 +18,7 @@ Technologies used in this project:
 *(Some commands may require **sudo**)*
 
 
-How to setup:
+How to setup (single execution):
 - Install **Node.js** through binary package
 - Open Terminal
 - Run `npm install live-server -g`, followed by `npm install nodemon -g`
@@ -28,11 +28,13 @@ How to setup:
 - Exit out of directory
 - Run `pip install socketIO-client`
 - Run `pip install numpy`
+- Download and extract project
+- Change directory to project root
+- Run `npm install`
 
 
 How to run:
 - Change directory to project root
-- Run `npm install`
 - Run `live-server` in one Terminal process
 - Run `nodemon server.js` or `node server.js` in another Terminal process
 - Run `python MoodVizBit.py` in another Terminal process
