@@ -46,27 +46,32 @@ $("#confetti").change(function(){
 
 
 // Toggle 'space' to display debug/customization menu
-$(".controls").hide();
-var controlView = "no";
+$(".controls").show();
+$(".content").show();
+var controlView = "yes";
 $(document).keydown(function(evt) {
   if (evt.keyCode == 32) {
     if(controlView == "yes"){
+      $(".content").hide();
       $(".controls").hide();
       controlView = "no";
     }
     else{
       $(".controls").show();
+      $(".content").show();
       controlView = "yes";
     }
   }
 });
 
 
-//Mouse movement enables all UI to show - after 3 seconds of no movement, only visualisation remains
-function hideContent() {
-   $(".content").hide();
-}
-$(document).mousemove(function(evt) {
-  $(".content").show();
-  setTimeout(hideContent, 3000);
-});
+// //Mouse movement enables all UI to show - after 3 seconds of no movement, only visualisation remains
+// function hideContent() {
+//    $(".content").hide();
+//    $(".controls").hide();
+// }
+// $(document).mousemove(function(evt) {
+//   $(".content").show();
+//   $(".controls").show();
+//   setTimeout(hideContent, 4000);
+// });
