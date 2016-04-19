@@ -42,10 +42,10 @@ class MoodVizBit(object):
 
     def __init__(self):
         # BITalino API exclusive variables
-        self.macAddress = "98:d3:31:30:28:81"
+        # self.macAddress = "98:d3:31:30:28:81"
 
         # VCM address for Mac OS
-        # self.macAddress = "/dev/tty.bitalino-DevB"
+        self.macAddress = "/dev/tty.bitalino-DevB"
 
         self.batteryThreshold = 30
         self.acqChannels = [0,1]  # 0-7, left-top to right-bottom of Plugged board
