@@ -63,15 +63,3 @@ $(document).keydown(function(evt) {
     }
   }
 });
-
-
-// //Mouse movement enables all UI to show - after 3 seconds of no movement, only visualisation remains
-// function hideContent() {
-//    $(".content").hide();
-//    $(".controls").hide();
-// }
-// $(document).mousemove(function(evt) {
-//   $(".content").show();
-//   $(".controls").show();
-//   setTimeout(hideContent, 4000);
-// });
