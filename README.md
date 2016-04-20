@@ -13,10 +13,26 @@ Technologies used in this project:
 - Bootstrap
 - Bower
 
+----------
 
-**Tested on a MacBook Pro/Air**
-*(Some commands may require **sudo**)*
+**Tested on a MacBook Pro/Air** *(Some commands may require* `sudo`*)*
 
+DEVICE SPECIFICATIONS:
+> **15" Macbook Pro Retina (Early 2013)**
+> RAM: 16GB
+> CPU: i7 2.7Ghz Quad Core
+> SSD: 256GB
+> GPU: NVIDIA GeForce GT 650M (1GB)
+> OS: El Capitan (version 10.11.4)
+
+> **13" Macbook Air Retina (Early 2013)**
+> RAM: 4GB
+> CPU: i5 1.3Ghz Dual Core
+> SSD: 121GB
+> GPU: Intel HD Graphics 5000 1536 MB
+> OS: El Capitan (version 10.11.4)
+
+----------
 
 How to setup (single execution):
 - Install **Node.js** through binary package
@@ -34,7 +50,6 @@ How to prepare project (single execution for every fresh project version downloa
 - Change directory to project root
 - Run `npm install`
 
-
 How to run:
 - Change directory to project root
 - Run `live-server` in one Terminal process
@@ -42,6 +57,8 @@ How to run:
 - Run `python MoodVizBit.py` in another Terminal process
 
 Please note: Bluetooth connectivity with Python seems to be quite buggy on Mac throughout the implementation process. I have not been able to identify the root cause nor find a complete fail-safe solution. In the mean time, a single variable `self.macAddress` in `MoodVizBit.py` may need to be changed in order to connect to the board. This may be `"/dev/tty.bitalino-DevB"` or `"98:d3:31:30:28:81"`. Mood Visualiser is able to work without the sensor integration, just don't run the `python MoodVizBit.py` command.
+
+----------
 
 Created by **Anand Subramaniam**
 
