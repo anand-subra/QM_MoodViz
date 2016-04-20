@@ -19,17 +19,28 @@ Technologies used in this project:
 
 DEVICE SPECIFICATIONS:
 > **15" Macbook Pro Retina (Early 2013)**
+> 
 > RAM: 16GB
+> 
 > CPU: i7 2.7Ghz Quad Core
+> 
 > SSD: 256GB
+> 
 > GPU: NVIDIA GeForce GT 650M (1GB)
+> 
 > OS: El Capitan (version 10.11.4)
 
+
 > **13" Macbook Air Retina (Early 2013)**
+> 
 > RAM: 4GB
+> 
 > CPU: i5 1.3Ghz Dual Core
+> 
 > SSD: 121GB
+> 
 > GPU: Intel HD Graphics 5000 1536 MB
+> 
 > OS: El Capitan (version 10.11.4)
 
 ----------
