@@ -1,3 +1,14 @@
+// Select song to play
+var song = $('#selectedSong').val();
+$('#displaySong').text(song);
+
+$("#selectedSong").change(function(){
+  song = this.value;
+  changeSong(song);
+  $('#displaySong').text(song);
+})
+
+
 // Determine colour scheme to use
 var type = $('#colourScheme').val();
 $('#displayColourScheme').text(type);

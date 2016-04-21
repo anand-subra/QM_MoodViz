@@ -23,6 +23,7 @@ sensorValue;
 // Variables for p5.Sound processes
 var mySound, amplitude, beat, bass, lowmid, mid, highmid, treble, level;
 
+
 // Callback for sound object - after track loading is complete, get rid of loading div
 var loadingOverlay = function(){
   window.setTimeout(200);
@@ -30,7 +31,7 @@ var loadingOverlay = function(){
 };
 
 function preload(){
-  mySound = loadSound('../assets/audio/GetHyperDroideka.mp3', loadingOverlay);
+  mySound = loadSound('../assets/audio/'+ song + '.mp3', loadingOverlay);
 }
 
 function setup() {
@@ -128,7 +129,13 @@ function keyPressed() {
   // Stop functionality
   if (keyCode == ESCAPE)
   {
-    if(mySound.isPlaying() || mySound.isPaused() )
+    if(mySound.isPaused())
+    {
+      mySound.play();
+      mySound.stop();
+    }
+
+    else if(mySound.isPlaying())
     {
       mySound.stop();
     }
@@ -164,6 +171,22 @@ function burstConfetti(){
   }
 }
 
+
+function changeSong(track){
+
+  if(mySound.isPaused())
+  {
+    mySound.play();
+    mySound.stop();
+  }
+
+  else if(mySound.isPlaying())
+  {
+    mySound.stop();
+  }
+  $(".loading").show();
+  preload();
+}
 
 // Switch colour based on scheme/theme, use EDA sensor value (0-1) as a multiplication factor to control saturation and brightness of viz (or energy of visualisation)
 function changeColour(set, sensorValue){
