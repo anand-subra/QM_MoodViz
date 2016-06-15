@@ -3,14 +3,12 @@ $.getScript("../assets/scripts/vizController.js");
 $.getScript("../assets/scripts/confetti.js");
 
 // Variables for p5.Main and visualisation controls
-var centerX = $(window).width()/2,
-centerY = $(window).height()/2,
+var windowHeight = $(window).height(),
+windowWidth = $(window).width(),
 radius,
 angle = 0,
 speed,
 x, y, sizePath,
-windowHeight = $(window).height(),
-windowWidth = $(window).width(),
 ampRadius,
 c,
 vertices,
@@ -68,8 +66,8 @@ function draw() {
 
   // Lissajous algorithm implementation
   fill(c);
-  x = centerX + cos(angle)*radius; // Set frequency on x-axis
-  y = centerY + sin(angle)*radius; // Set frequency on y-axis
+  x = windowWidth/2 + cos(angle)*radius; // Set frequency on x-axis
+  y = windowHeight/2 + sin(angle)*radius; // Set frequency on y-axis
   noStroke();
   ellipse(x, y, ampRadius, ampRadius); // Larger circles with higher amplitude - (high amplitude = large circles + wider spread of circles)
   angle += speed;
@@ -195,11 +193,23 @@ function changeColour(set, sensorValue){
     case "IceBlue":
     c = color(random(170,210), random(80,95)*sensorValue, random(60,70)*sensorValue, 90);
     break;
-    case "Multi":
-    c = color(random(1,360), random(70,95)*sensorValue, random(80,100)*sensorValue, 90);
+    case "Pastels":
+    c = color(random(0,360), random(45,50)*sensorValue, random(65,70)*sensorValue, 90);
+    break;
+    case "Neons":
+    c = color(random(0,360), random(80,85)*sensorValue, random(90,95)*sensorValue, 90);
+    break;
+    case "SweetSourLime":
+    c = color(random(85,145), random(80,95)*sensorValue, random(70,80)*sensorValue, 90);
+    break;
+    case "Rainbow":
+    c = color(random(0,360), random(70,95)*sensorValue, random(80,100)*sensorValue, 90);
     break;
     case "Pinks":
     c = color(random(300,350), random(70,95)*sensorValue, random(75,100)*sensorValue, 90);
+    break;
+    case "Infinity":
+    c = color(random(0,360), random(0,100)*sensorValue, random(0,100)*sensorValue, 90);
     break;
     case "HotFireMixTape":
     c = color(random(1,60), random(90,100)*sensorValue, random(80,100)*sensorValue, 90);
@@ -230,4 +240,9 @@ function setCycleSpeed(cspeed){
 // Dynamically switch confetti overlay on/off based on control/debug settings
 function coffettiSwitch(cSwitch){
   confettiSwitch = cSwitch;
+}
+
+//Dynamically resize canvas with browser window
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
