@@ -131,11 +131,13 @@ function keyPressed() {
     {
       mySound.play();
       mySound.stop();
+      clear();
     }
 
     else if(mySound.isPlaying())
     {
       mySound.stop();
+      clear();
     }
   }
   return false;
@@ -184,6 +186,7 @@ function changeSong(track){
   }
   $(".loading").show();
   preload();
+  clear();
 }
 
 // Switch colour based on scheme/theme, use EDA sensor value (0-1) as a multiplication factor to control saturation and brightness of viz (or energy of visualisation)
