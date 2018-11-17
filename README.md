@@ -2,13 +2,15 @@
 
 The aim of this UG project is to design a system which makes use of wireless devices, web technologies and biometric sensors to present data in the form of a visualisation that is easily accessible and interpretable by both performer and audience in quasi real time.
 
+A paper for this project has been published in AudioMostly 2017, which can be read [here](https://dl.acm.org/citation.cfm?id=3123517&preflayout=flat).
+
 Technologies used in this project:
 - [Node.js](https://nodejs.org/en/)
 - [p5.js](http://p5js.org/) (a JavaScript library based on the Processing language)
 - [BITalino Plugged](http://www.bitalino.com/index.php/plugged-kit) health platform
-- [BITalino Python API] (https://github.com/BITalinoWorld/python-api)
+- [BITalino Python API](https://github.com/BITalinoWorld/python-api)
 - [socketIO JS](http://socket.io)
-- [socketIO-client(Python)](https://github.com/invisibleroads/socketIO-client)
+- [socketIO-client (Python)](https://github.com/invisibleroads/socketIO-client)
 - JQuery
 - Bootstrap
 - Bower
@@ -19,28 +21,28 @@ Technologies used in this project:
 
 DEVICE SPECIFICATIONS:
 > **15" Macbook Pro Retina (Early 2013)**
-> 
+>
 > RAM: 16GB
-> 
+>
 > CPU: i7 2.7Ghz Quad Core
-> 
+>
 > SSD: 256GB
-> 
+>
 > GPU: NVIDIA GeForce GT 650M (1GB)
-> 
+>
 > OS: El Capitan (version 10.11.4)
 
 
 > **13" Macbook Air Retina (Early 2013)**
-> 
+>
 > RAM: 4GB
-> 
+>
 > CPU: i5 1.3Ghz Dual Core
-> 
+>
 > SSD: 121GB
-> 
+>
 > GPU: Intel HD Graphics 5000 1536 MB
-> 
+>
 > OS: El Capitan (version 10.11.4)
 
 ----------

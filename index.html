@@ -21,36 +21,36 @@
     <div class="content" id="content">
       <div class="moodviz">
         <h2>Mood Visualiser</h2>
-        <h4><b>Colour set:</b> <span id="displayColourScheme"></span></h4>
-        <h4><b>Track:</b> <span id="displaySong"></span></h4>
+        <!-- <h4><b>Colour set:</b> <span id="displayColourScheme"></span></h4>
+        <h4><b>Track:</b> <span id="displaySong"></span></h4> -->
         <div class="controls">
           <h6>Song:</h6>
           <select class="form-control" id="selectedSong">
-            <option selected="selected">VividDreams</option>
-            <option>TheMysterySpot</option>
-            <option>HallOfTheMountainKing</option>
-            <option>DiesIrae</option>
-            <option>GetHyperDroideka</option>
-            <option>RappersDelight</option>
+            <option>Bellbottoms</option>
+            <option>StrangerThings</option>
+            <option selected="selected">Caravan</option>
+            <option>CoolJerk</option>
+            <option>GameOfThrones</option>
+            <option>SuperMarioBros</option>
           </select>
 
           <h6>Colour:</h6>
           <select class="form-control" id="colourScheme">
-            <option selected="selected">Rainbow</option>
+            <option>Rainbow</option>
             <option>Neons</option>
             <option>SweetSourLime</option>
             <option>Pastels</option>
             <option>IceBlue</option>
             <option>Pinks</option>
-            <option>HotFireMixTape</option>
+            <option selected="selected">HotFireMixTape</option>
             <option>Infinity</option>
           </select>
 
-          <h6>Frame Rate:</h6>
+          <!-- <h6>Frame Rate:</h6>
           <select class="form-control" id="framesPerSecond">
             <option selected="selected">60</option>
             <option>30</option>
-          </select>
+          </select> -->
 
           <h6>Geometry Complexity:</h6>
           <select class="form-control" id="geomComplexity">
@@ -62,16 +62,18 @@
 
           <h6>Cycle Speed:</h6>
           <select class="form-control" id="cycleSpeed">
+            <option>0.01</option>
+	<option selected="selected">0.025</option>
             <option>0.05</option>
             <option>0.075</option>
-            <option selected="selected">0.1</option>
+            <option>0.1</option>
             <option>0.2</option>
             <option>0.3</option>
             <option>0.4</option>
             <option>0.5</option>
           </select>
 
-          <h6>Confetti Burst:</h6>
+          <h6>Confetti Burst (<i>ALPHA</i>):</h6>
           <select class="form-control" id="confetti">
             <option selected="selected">OFF</option>
             <option>ON</option>
@@ -87,7 +89,7 @@
       </div>
 
       <div class="state">
-        <p> <img src="assets/images/circuit6.png" alt="bitalino">&nbsp;<span class="glyphicon glyphicon-exclamation-sign" id="bitstate"></span>&nbsp;<img src="assets/images/screen54.png" alt="computer"></p>
+        <p> <img src="assets/images/circuit6.png" alt="bitalino"> &nbsp;<span class="glyphicon glyphicon-exclamation-sign" id="bitstate"></span>&nbsp; <img src="assets/images/screen54.png" alt="computer"></p>
       </div>
 
     </div>

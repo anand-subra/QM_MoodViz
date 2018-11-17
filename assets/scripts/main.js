@@ -194,16 +194,16 @@ function changeColour(set, sensorValue){
   var c;
   switch(set){
     case "IceBlue":
-    c = color(random(170,210), random(80,95)*sensorValue, random(60,70)*sensorValue, 90);
+    c = color(random(170,210), random(80,95)*sensorValue, random(80,100)*sensorValue, 90);
     break;
     case "Pastels":
-    c = color(random(0,360), random(45,50)*sensorValue, random(65,70)*sensorValue, 90);
+    c = color(random(0,360), random(45,50)*sensorValue, random(75,85)*sensorValue, 90);
     break;
     case "Neons":
-    c = color(random(0,360), random(80,85)*sensorValue, random(90,95)*sensorValue, 90);
+    c = color(random(0,360), random(80,90)*sensorValue, random(90,95)*sensorValue, 90);
     break;
     case "SweetSourLime":
-    c = color(random(85,145), random(80,95)*sensorValue, random(70,80)*sensorValue, 90);
+    c = color(random(85,145), random(75,90)*sensorValue, random(70,80)*sensorValue, 90);
     break;
     case "Rainbow":
     c = color(random(0,360), random(70,95)*sensorValue, random(80,100)*sensorValue, 90);
